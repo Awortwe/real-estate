@@ -44,29 +44,31 @@ License: For each use you must have a valid license purchased only from above li
     <link rel="stylesheet" href="{{ asset('backend/assets/css/demo2/style.css') }}">
     <!-- End layout styles -->
 
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}"/>
+    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
-<body>
-	<div class="main-wrapper">
 
-    <!-- partial:partials/_sidebar.html -->
+<body>
+    <div class="main-wrapper">
+
+        <!-- partial:partials/_sidebar.html -->
         @include('admin.body.sidebar')
 
-    <!-- partial -->
-
-    <div class="page-wrapper">
-
-        <!-- partial:partials/_navbar.html -->
-        @include('admin.body.header')
         <!-- partial -->
 
-        @yield('admin')
+        <div class="page-wrapper">
 
-        <!-- partial:partials/_footer.html -->
-        @include('admin.body.footer')
-        <!-- partial -->
+            <!-- partial:partials/_navbar.html -->
+            @include('admin.body.header')
+            <!-- partial -->
 
-    </div>
+            @yield('admin')
+
+            <!-- partial:partials/_footer.html -->
+            @include('admin.body.footer')
+            <!-- partial -->
+
+        </div>
     </div>
 
     <!-- core:js -->
@@ -86,7 +88,31 @@ License: For each use you must have a valid license purchased only from above li
     <!-- Custom js for this page -->
     <script src="{{ asset('backend/assets/js/dashboard-dark.js') }}"></script>
     <!-- End custom js for this page -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    </body>
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'success':
+                    toastr.success(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'warning':
+                    toastr.warning(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'error':
+                    toastr.error(" {{ Session::get('message') }} ");
+                    break;
+            }
+        @endif
+    </script>
+
+</body>
 
 </html>
